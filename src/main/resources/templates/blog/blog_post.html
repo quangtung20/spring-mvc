@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.org.thymeleaf.org">
+<div th:replace="blog/header::header"></div>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="col-md-8 offset-md-2">
+        <h1 class="d-flex justify-content-center" th:text="${post.title}"></h1>
+        <hr/>
+        <h1 class="d-flex justify-content-center" th:text="${post.shortDescription}"> </h1>
+        <hr/>
+        <h1 class="d-flex justify-content-center" th:utext="${post.content}"></h1>
+        <hr/>
+        <div>
+          <h3>Comments</h3>
+          <div th:each="comment:${post.comments}">
+            <div>
+              <span class="d-inline justify-content-start mr-5 "><b>Name:</b><strong th:text="${comment.name}"></strong></span>
+              <span class="d-inline justify-content-end mx-5"><b>Date:<strong th:text="${#temporals.format(comment.createdOn,'dd MMMM yyyy')}"></strong></b></span>
+            </div>
+            <p th:text="${comment.content}"></p>
+          </div>
+          <div class="card-header">
+            <h2>Leave Comment</h2>
+          </div>
+          <div class="card-body">
+            <form
+              role="form"
+              method="post"
+              th:action="@{/{postUrl}/comments(postUrl=${post.url})}"
+              th:object="${comment}"
+            >
+              <div class="row">
+                <div class="mb-3">
+                  <input
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    th:field="${comment.name}"
+                    type="text"
+                  />
+                  <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="${comment.name}"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-3">
+                  <input
+                          class="form-control"
+                          id="email"
+                          name="email"
+                          placeholder="Enter your Email"
+                          th:field="${comment.email}"
+                          type="text"
+                  />
+                  <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="${comment.email}"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-3">
+                  <textarea
+                          class="form-control"
+                          id="content"
+                          name="content"
+                          placeholder="Enter your comment"
+                          th:field="${comment.content}"
+                  />
+                  <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="${comment.content}"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-5">
+                  <button class="form-group col-md-5 btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div th:include="blog/search::search"></div>
+    </div>
+  </div>
+</div>
+<div th:replace="blog/footer::footer"></div>
+</body>
+</html>

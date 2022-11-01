@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.org.thymeleaf.org">
+<div th:replace="admin/header::header"></div>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="d-flex justify-content-center" th:text="${post.title}"></h1>
+            <hr/>
+            <h1 class="d-flex justify-content-center" th:text="${post.shortDescription}"></h1>
+            <hr/>
+            <h1 class="d-flex justify-content-center" th:utext="${post.content}"></h1>
+            <hr/>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/footer::footer"></div>
+</body>
+</html>
